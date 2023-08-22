@@ -9,6 +9,8 @@ const ProductTable = () => {
   const [deleteProduct, setDeleteProducts] = useState([])
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [updateProduct, setUpdateProduct] = useState(null);
+  const [search, setSearch] = useState('')
+  console.log(search)
   const handleView = (product) => {
     setSelectedProduct(product);
   };
@@ -28,7 +30,7 @@ const ProductTable = () => {
     console.log(`Product with ID ${product.id} updated with new name: ${newName}`);
     setUpdateProduct(product);
   };
-  
+
 
   const handleDelete = (product) => {
     const updatedProducts = deleteProduct.filter(product => product.id !== product);
@@ -39,7 +41,10 @@ const ProductTable = () => {
   return (
     <>
       <div>
-        <Table striped bordered hover variant="dark">
+        <div className="search-input">
+          <input type="search" placeholder="Search...." id="search" name="" onChange={(e) => setSearch(e.target.value)} />
+        </div>
+        <Table striped bordered hover variant="dark" id="myTable">
           <thead>
             <tr>
               <th>ID</th>
@@ -51,7 +56,10 @@ const ProductTable = () => {
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
+            {products.filter((product) => {
+              return search.toLowerCase() === '' ? product: product.title.toLowerCase().includes(search)
+              }
+            ).map((product) => (
               <tr key={product.id}>
                 <td width={50}>{product.id}</td>
                 <td width={200}>{product.title}</td>

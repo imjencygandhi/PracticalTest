@@ -19,3 +19,6 @@ td button {
   border: 0;
   cursor: pointer;
 }
+.search-input{
+  text-align: center;
+}
